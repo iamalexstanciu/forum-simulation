@@ -1,0 +1,38 @@
+@startuml
+
+class Forum <SingleTone> {
+- topics : List<Topic>
++ getEntireForum(){} : String
+}
+
+abstract class Post{
+- creationDate : LocalDateTime;
+- message : String;
+- id : UUID;
+}
+class Topic extends Post{
+- comments : List<Comment>;
+- title : String;
+- topicType : TopicType;
++ addComment(Comment) : void;
++ getOnlyModeratedComments(){} : List<Comment>
+}
+
+class Comment extends Post{
+- topic : Topic;
+- moderated : boolean;
++ changeCommentState(){} : boolean;
+
+}
+
+enum TopicType{
+REGULAR,
+ANNOUNCEMENT,
+NEWS
+}
+
+Topic -- TopicType
+Forum --> Topic
+Topic -- Comment
+
+@enduml
